@@ -1,0 +1,46 @@
+{
+  "name": "musicPlayere",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "android": "react-native run-android",
+    "test": "jest"
+  },
+  "dependencies": {
+    "async.parallel": "^0.5.2",
+    "dasu": "^0.1.0",
+    "dayjs": "^1.8.12",
+    "mobx": "^5.9.4",
+    "mobx-persist": "^0.4.1",
+    "mobx-react-lite": "^1.2.0",
+    "native-base": "^2.12.1",
+    "react": "16.8.3",
+    "react-native": "0.59.4",
+    "react-native-cheerio": "^1.0.0-rc.4",
+    "react-native-elements": "^1.1.0",
+    "react-native-sound": "^0.10.12",
+    "react-native-vector-icons": "^6.4.2",
+    "react-native-ytdl": "^1.0.1",
+    "react-router-native": "4.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-decorators": "^7.4.0",
+    "@babel/runtime": "^7.4.3",
+    "@types/jest": "^24.0.11",
+    "@types/react": "^16.8.13",
+    "@types/react-native": "^0.57.43",
+    "@types/react-native-vector-icons": "^6.4.0",
+    "@types/react-router-native": "4.2.4",
+    "@types/react-test-renderer": "^16.8.1",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
+    "metro-react-native-babel-preset": "^0.53.1",
+    "react-test-renderer": "16.8.3",
+    "typescript": "^3.4.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
