@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { Container } from "native-base";
 import * as React from "react";
-import { useEffect } from "react";
 import { ScrollView, Text } from "react-native";
 import { Video } from "../stores/LandingScreen";
 import { RootStoreContext } from "../stores/RootStore";
@@ -13,11 +12,7 @@ import { ui } from "../utils/UI";
 interface Props {}
 
 export const ListingScreen: React.FC<Props> = observer(() => {
-  const { listingStore } = React.useContext(RootStoreContext);
-
-  useEffect(() => {
-    return () => {};
-  }, []);
+  const { listingStore, playerStore } = React.useContext(RootStoreContext);
 
   const container =
     listingStore.loading === "undone" ? (
@@ -51,7 +46,7 @@ export const ListingScreen: React.FC<Props> = observer(() => {
     <Container style={[ui.bg2]}>
       <Header />
       <ScrollView>{container}</ScrollView>
-      <PlayerFooter />
+      {playerStore.playbackState && <PlayerFooter />}
     </Container>
   );
 });

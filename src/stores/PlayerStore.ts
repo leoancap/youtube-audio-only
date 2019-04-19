@@ -1,10 +1,12 @@
 import { action, observable } from "mobx";
+import { persist } from "mobx-persist";
 import Sound from "react-native-sound";
 import { RootStore } from "./RootStore";
 
-export interface video {
+export interface Song {
   title: string;
   videoId: string;
+  duration: string;
   audioUrl?: string;
 }
 
@@ -14,11 +16,13 @@ export class PlayerStore {
     this.rootStore = rootStore;
     Sound.setCategory("Playback", true);
   }
-  @observable currentSongUrl: string;
-  @observable currentSong: any;
+  @persist @observable currentSongUrl: string;
+  @persist("list") @observable queue: Song[] = [];
+  @persist("object") @observable currentSong: any;
   @observable playbackState: string;
 
-  @action playSound(soundUrl: string) {
+  @action play(soundUrl?: string) {
+    if (!soundUrl) soundUrl = this.currentSongUrl;
     const callback = (e: any, sound: Sound) => {
       if (e) {
         this.playbackState = "error";
@@ -32,20 +36,29 @@ export class PlayerStore {
       });
     };
     if (this.playbackState === "playing") {
-      this.stopSound(soundUrl);
+      this.stop(() => {
+        this.playbackState = "stopped";
+        this.play(soundUrl);
+      });
     } else {
       this.currentSong = new Sound(soundUrl, Sound.MAIN_BUNDLE, error =>
         callback(error, this.currentSong),
       );
     }
   }
-  @action stopSound(soundUrl: string) {
+  @action pause() {
     this.currentSong.pause();
-    this.currentSong.stop(() => {
-      this.playbackState = "stopped";
-      this.playSound(soundUrl);
-    });
+    this.playbackState = "paused";
   }
+  @action resume() {
+    this.currentSong.play();
+    this.playbackState = "playing";
+  }
+  @action stop(callback?: () => void) {
+    this.currentSong.pause();
+    this.currentSong.stop(callback);
+  }
+  @action addToQueue(song: Song) {}
   @action getTime() {
     if (!this.currentSong.isPlaying) return;
 

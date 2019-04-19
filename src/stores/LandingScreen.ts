@@ -2,15 +2,8 @@ import { flow, observable, reaction } from "mobx";
 import { persist } from "mobx-persist";
 import { getAudioUrl } from "../utils/player";
 import { search } from "../utils/searchOptimized";
+import { Song } from "./PlayerStore";
 import { RootStore } from "./RootStore";
-
-export interface Video {
-  title: string;
-  videoId: string;
-  duration: string;
-  audioUrl?: string;
-  thumbnailUrl?: string;
-}
 
 const filterVideos = (videos: any) =>
   videos.map((v: any) => ({
@@ -38,7 +31,7 @@ export class ListingStore {
     );
   }
 
-  @persist("list") @observable youtubeVideos: Video[] = [];
+  @persist("list") @observable youtubeVideos: Song[] = [];
   @persist @observable searchText: string;
   @observable loading = "undone";
   @observable errorMsg = "";
@@ -61,7 +54,7 @@ export class ListingStore {
     try {
       const response = yield getAudioUrl(videoId);
       this.rootStore.playerStore.currentSongUrl = response.audioUrl;
-      this.rootStore.playerStore.playSound(response.audioUrl);
+      this.rootStore.playerStore.play(response.audioUrl);
     } catch (error) {}
   });
 }

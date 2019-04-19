@@ -1,7 +1,9 @@
+import { observer } from "mobx-react-lite";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { Slider } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { RootStoreContext } from "../stores/RootStore";
 import { ui } from "../utils/UI";
 
 interface Props {}
@@ -27,11 +29,9 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 8,
-    // backgroundColor: "#738B0D",
     flex: 1,
     alignItems: "stretch",
     justifyContent: "center",
-    // paddingBottom: 100,
     marginTop: -30,
   },
   trackStyle: {
@@ -39,10 +39,20 @@ const styles = StyleSheet.create({
   },
 });
 
-export const PlayerFooter: React.FC<Props> = ({}) => {
+const iconSorter = (name: string, onPress: () => void) => (
+  <Icon.Button
+    color={ui.color1.color}
+    backgroundColor="#063642"
+    name={name}
+    onPress={onPress}
+  />
+);
+
+export const PlayerFooter: React.FC<Props> = observer(() => {
+  const { playerStore } = React.useContext(RootStoreContext);
+
   return (
     <View style={[styles.container, ui.bg3]}>
-      {/* <View style={[styles.line, { width: "80%" }]} /> */}
       <View style={[styles.line]}>
         <Slider
           value={50}
@@ -53,31 +63,21 @@ export const PlayerFooter: React.FC<Props> = ({}) => {
         />
       </View>
       <View style={styles.row}>
-        <Icon.Button
-          color={ui.color1.color}
-          backgroundColor="#063642"
-          name="backward"
-          onPress={() => {
-            console.log("play");
-          }}
-        />
-        <Icon.Button
-          backgroundColor="#063642"
-          color={ui.color1.color}
-          name="stop"
-          onPress={() => {
-            console.log("play");
-          }}
-        />
-        <Icon.Button
-          backgroundColor="#063642"
-          name="forward"
-          color={ui.color1.color}
-          onPress={() => {
-            console.log("play");
-          }}
-        />
+        {iconSorter("backward", () => {
+          console.log("ssss");
+        })}
+        {playerStore.playbackState === "playing" &&
+          iconSorter("pause", () => {
+            playerStore.pause();
+          })}
+        {playerStore.playbackState === "paused" &&
+          iconSorter("play", () => {
+            playerStore.resume();
+          })}
+        {iconSorter("forward", () => {
+          console.log("ssss");
+        })}
       </View>
     </View>
   );
-};
+});

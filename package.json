@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/ramda": "^0.26.7",
     "async.parallel": "^0.5.2",
     "dasu": "^0.1.0",
     "dayjs": "^1.8.12",
@@ -15,6 +16,7 @@
     "mobx-persist": "^0.4.1",
     "mobx-react-lite": "^1.2.0",
     "native-base": "^2.12.1",
+    "ramda": "^0.26.1",
     "react": "16.8.3",
     "react-native": "0.59.4",
     "react-native-cheerio": "^1.0.0-rc.4",

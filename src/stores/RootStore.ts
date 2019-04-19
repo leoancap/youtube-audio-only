@@ -16,9 +16,9 @@ export class RootStore {
   playerStore = new PlayerStore(this);
   constructor() {
     hydrate("listingStore", this.listingStore).then(() => {
-      if (this.listingStore.lastTextSearched) {
-        this.listingStore.fetchVideos(this.listingStore.lastTextSearched);
-      }
+      // if (this.listingStore.searchText) {
+      //   this.listingStore.fetchVideos(this.listingStore.searchText);
+      // }
     });
   }
 }
