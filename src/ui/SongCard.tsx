@@ -16,7 +16,7 @@ interface Props {
   videoId: string;
   duration: string;
   onVideoPress: () => void;
-  isFabOpen: boolean;
+  onAddToQueue: () => void;
 }
 
 const styles = StyleSheet.create({
@@ -66,10 +66,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   fabContainer: {
-    // left: "55%",
-    // top: "55%",
-    // maxWidth: "40%",
-    // width: "auto",
     backgroundColor: "transparent",
     height: "100%",
     width: "100%",
@@ -92,20 +88,14 @@ const styles = StyleSheet.create({
 });
 
 export const SongCard: React.FC<Props> = observer(
-  ({ duration, onVideoPress, title, isFabOpen }) => {
+  ({ duration, onVideoPress, title, onAddToQueue }) => {
     const [fabPosition, setFabPosition] = React.useState("");
     const [isFabVisible, setIsFabVisible] = React.useState(false);
 
-    const circlesRef = React.useRef(null);
-
-    console.log(fabPosition);
     return (
-      <View ref={circlesRef} style={[styles.cardContainer, ui.bg2]}>
+      <View style={[styles.cardContainer, ui.bg2]}>
         <TouchableOpacity
           onPress={e => {
-            const { width } = Dimensions.get("window");
-            const perc = e.nativeEvent.locationX / width;
-            console.log(perc);
             onVideoPress();
           }}
           style={styles.musicTitleWrapper}
@@ -136,14 +126,6 @@ export const SongCard: React.FC<Props> = observer(
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
-        {/* {isFabVisible ? (
-          <FabSongCard
-            fabPosition={fabPosition}
-            closeFab={() => {
-              setIsFabVisible(false);
-            }}
-          />
-        ) : null} */}
         <Modal visible={isFabVisible} transparent={true}>
           <TouchableHighlight
             onPressIn={() => {
@@ -161,7 +143,7 @@ export const SongCard: React.FC<Props> = observer(
                   Play Next
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={onAddToQueue}>
                 <Text style={[styles.buttonsText, ui.color1]}>
                   Add to Queue
                 </Text>

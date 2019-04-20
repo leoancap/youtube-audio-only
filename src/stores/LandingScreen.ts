@@ -50,7 +50,7 @@ export class ListingStore {
     }
   });
 
-  fetchAudioUrl = flow(function*(this: ListingStore, videoId: string) {
+  fetchAudioUrlAndPlay = flow(function*(this: ListingStore, videoId: string) {
     try {
       const response = yield getAudioUrl(videoId);
       this.rootStore.playerStore.currentSongUrl = response.audioUrl;

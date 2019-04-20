@@ -51,20 +51,28 @@ const iconSorter = (name: string, onPress: () => void) => (
 export const PlayerFooter: React.FC<Props> = observer(() => {
   const { playerStore } = React.useContext(RootStoreContext);
 
+  console.log(Math.floor(playerStore.currentSong._duration));
+  console.log(playerStore.currentSeconds);
+
   return (
     <View style={[styles.container, ui.bg3]}>
-      <View style={[styles.line]}>
-        <Slider
-          value={50}
-          onValueChange={value => {
-            console.log(value);
-          }}
-          trackStyle={styles.trackStyle}
-        />
-      </View>
+      {playerStore.currentSong._duration > 0 && (
+        <View style={[styles.line]}>
+          <Slider
+            value={playerStore.currentSeconds}
+            maximumValue={playerStore.duration}
+            minimumValue={0}
+            onSlidingComplete={value => {
+              playerStore.setCurrentTime(value);
+            }}
+            trackStyle={styles.trackStyle}
+          />
+        </View>
+      )}
       <View style={styles.row}>
         {iconSorter("backward", () => {
-          console.log("ssss");
+          console.log(playerStore.currentSong);
+          playerStore.currentSong.setCurrentTime(455);
         })}
         {playerStore.playbackState === "playing" &&
           iconSorter("pause", () => {
