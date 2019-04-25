@@ -8,6 +8,9 @@ export const ui = {
   bg3: {
     backgroundColor: "#063642",
   },
+  bg4: {
+    backgroundColor: "#2C2B4A",
+  },
   color1: {
     color: "#B3B5B5",
   },

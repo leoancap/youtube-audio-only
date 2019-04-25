@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { ui } from "../utils/UI";
 
+import LinearGradient from "react-native-linear-gradient";
+
 interface Props {
   title: string;
   videoId: string;
@@ -21,8 +23,8 @@ interface Props {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    borderRadius: 15,
-    borderTopWidth: 2,
+    borderRadius: 10,
+    borderTopWidth: 1,
     borderTopColor: ui.bg1.backgroundColor,
     flex: 1,
     flexDirection: "row",

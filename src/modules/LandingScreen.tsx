@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { Container } from "native-base";
 import * as React from "react";
-import { ScrollView, Text } from "react-native";
-import { Song } from "../stores/PlayerStore";
+import { ScrollView, Text, View } from "react-native";
+import { Video } from "../stores/PlayerStore";
 import { RootStoreContext } from "../stores/RootStore";
 import { Header } from "../ui/Header";
 import { PlayerFooter } from "../ui/PlayerFooter";
@@ -28,10 +28,10 @@ export const ListingScreen: React.FC<Props> = observer(() => {
         <Text>{listingStore.errorMsg}</Text>
       </Container>
     ) : (
-      listingStore.youtubeVideos.map((v: Song, i: number) => (
+      listingStore.youtubeVideos.map((v: Video, i: number) => (
         <SongCard
           onVideoPress={() => {
-            listingStore.fetchAudioUrlAndPlay(v.videoId);
+            listingStore.fetchAudioUrlAndPlay(v);
           }}
           onAddToQueue={() => {
             playerStore.addToQueue(v);
@@ -49,6 +49,7 @@ export const ListingScreen: React.FC<Props> = observer(() => {
       <Header />
       <ScrollView>{container}</ScrollView>
       {playerStore.playbackState && <PlayerFooter />}
+      {/* <PlayerFooter /> */}
     </Container>
   );
 });
