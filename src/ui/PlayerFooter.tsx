@@ -14,6 +14,7 @@ import { ui } from "../utils/UI";
 import LinearGradient from "react-native-linear-gradient";
 // import VideoPlayer from "react-native-video"
 import VideoPlayer from "react-native-video";
+import { parseDuration, secToHHMMSS } from "../utils/searchOptimized";
 
 interface Props {}
 
@@ -53,29 +54,20 @@ const styles = StyleSheet.create({
 });
 
 const iconSorter = (name: string, onPress: () => void) => (
-  <TouchableOpacity>
-    <Icon.Button
-      style={
-        {
-          // borderRadius: 500,
-          // borderWidth: 1,
-          // borderColor: "fff",
-        }
-      }
-      iconStyle={{
-        paddingLeft: 3,
-        marginLeft: 3,
-        marginRight: 3,
-        marginBottom: 0,
-        marginTop: 0,
-      }}
-      color={ui.color5.color}
-      backgroundColor={"transparent"}
-      name={name}
-      onPress={onPress}
-      size={name === "play" || name === "pause" ? 24 : 16}
-    />
-  </TouchableOpacity>
+  <Icon.Button
+    iconStyle={{
+      paddingLeft: 3,
+      marginLeft: 3,
+      marginRight: 3,
+      marginBottom: 0,
+      marginTop: 0,
+    }}
+    color={ui.color5.color}
+    backgroundColor={"transparent"}
+    name={name}
+    onPress={onPress}
+    size={name === "play" || name === "pause" ? 24 : 16}
+  />
 );
 
 export const PlayerFooter: React.FC<Props> = observer(() => {
@@ -84,8 +76,6 @@ export const PlayerFooter: React.FC<Props> = observer(() => {
   const [sliderFocused, setSliderFocused] = React.useState(false);
 
   return (
-    // <View style={[styles.container, ui.bg3]}>
-
     <LinearGradient
       colors={[
         ui.bg3.backgroundColor,
@@ -97,16 +87,19 @@ export const PlayerFooter: React.FC<Props> = observer(() => {
       <VideoPlayer
         source={{ uri: playerStore.currentSong.audioUrl }}
         style={styles.player}
-        // rate={playerStore.rate}
+        rate={playerStore.rate}
         paused={playerStore.playbackState === "paused"}
         ref={player}
+        onProgress={data => {
+          if (!sliderFocused) {
+            playerStore.currentTime = data.currentTime;
+          }
+        }}
       />
       <View style={[styles.line]}>
         <Slider
-          // value={playerStore.currentSeconds}
-          value={30}
-          // maximumValue={playerStore.currentSong.seconds}
-          maximumValue={388}
+          value={playerStore.currentTime}
+          maximumValue={playerStore.currentSong.seconds}
           minimumValue={0}
           minimumTrackTintColor={ui.color5.color}
           thumbTintColor={ui.color5.color}
@@ -114,18 +107,25 @@ export const PlayerFooter: React.FC<Props> = observer(() => {
           thumbStyle={sliderFocused ? { transform: [{ scale: 1.25 }] } : {}}
           maximumTrackTintColor="transparent"
           onSlidingComplete={value => {
-            // playerStore.setCurrentTime(value);
+            // @ts-ignore
+            player.current!.seek(value, 3000);
             setSliderFocused(false);
+          }}
+          onValueChange={value => {
+            playerStore.currentTime = value;
           }}
           trackStyle={styles.trackStyle}
         />
       </View>
-      {/* <View style={styles.durationWrapper}>
-        <Text style={[styles.durationText, ui.color1]}>0:02</Text>
-        <Text style={[styles.durationText, ui.color1]}>1:12:30</Text>
-      </View> */}
       <View style={styles.controlButtons}>
-        <Text style={[styles.durationText, ui.color1]}>0:02</Text>
+        <Text style={[styles.durationText, ui.color1]}>
+          {playerStore.currentTime > 0
+            ? secToHHMMSS(
+                playerStore.currentTime + 1,
+                playerStore.currentSong.duration,
+              )
+            : secToHHMMSS(0, playerStore.currentSong.duration)}
+        </Text>
         {iconSorter("step-backward", () => {
           // console.log(playerStore.currentSong);
           // playerStore.currentSong.setCurrentTime(455);
@@ -141,7 +141,9 @@ export const PlayerFooter: React.FC<Props> = observer(() => {
         {iconSorter("step-forward", () => {
           console.log(player);
         })}
-        <Text style={[styles.durationText, ui.color1]}>1:12:30</Text>
+        <Text style={[styles.durationText, ui.color1]}>
+          {playerStore.currentSong.duration}
+        </Text>
       </View>
     </LinearGradient>
     // </View>

@@ -86,3 +86,14 @@ export function parseDuration(timestampText: string) {
     timestamp: timestamp,
   };
 }
+
+export function secToHHMMSS(seconds: number, duration: string) {
+  var date = new Date(0);
+  date.setSeconds(seconds); // specify value for SECONDS here
+  var timeString = date.toISOString().substr(11, 8);
+  if (duration.split(":").length < 3) {
+    const t = timeString.split(":");
+    return t[1] + ":" + t[2];
+  }
+  return timeString;
+}
