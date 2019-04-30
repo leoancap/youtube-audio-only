@@ -15,7 +15,7 @@ export function getAudioUrl(videoId: string) {
         thumbnailUrl: "",
         audioUrl: audioUrl,
       };
-      res(audioInfo);
+      res(audioUrl);
     });
   });
 }

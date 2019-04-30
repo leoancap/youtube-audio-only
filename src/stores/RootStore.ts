@@ -1,7 +1,8 @@
 import { create } from "mobx-persist";
 import { createContext } from "react";
 import { AsyncStorage } from "react-native";
-import { ListingStore } from "./LandingScreen";
+import { SearchStore } from "./SearchStore";
+import { LandingStore } from "./LandingStore";
 import { PlayerStore } from "./PlayerStore";
 import { RouterStore } from "./RouterStore";
 
@@ -12,12 +13,13 @@ const hydrate = create({
 
 export class RootStore {
   routerStore = new RouterStore(this);
-  listingStore = new ListingStore(this);
+  searchStore = new SearchStore(this);
   playerStore = new PlayerStore(this);
+  landingStore = new LandingStore(this);
   constructor() {
-    hydrate("listingStore", this.listingStore).then(() => {
-      // if (this.listingStore.searchText) {
-      //   this.listingStore.fetchVideos(this.listingStore.searchText);
+    hydrate("searchStore", this.searchStore).then(() => {
+      // if (this.searchStore.searchText) {
+      //   this.searchStore.fetchVideos(this.searchStore.searchText);
       // }
     });
   }

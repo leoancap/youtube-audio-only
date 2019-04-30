@@ -5,6 +5,8 @@ import { StyleSheet } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { RootStoreContext } from "../stores/RootStore";
 import { ui } from "../utils/UI";
+import { search } from "../utils/searchOptimized";
+import { fromPromise } from "mobx-utils";
 
 interface Props {}
 const styles = StyleSheet.create({
@@ -47,8 +49,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Header: React.FC<Props> = observer(() => {
-  const { listingStore } = React.useContext(RootStoreContext);
+export const SearchTextField: React.FC<Props> = observer(() => {
+  const { searchStore } = React.useContext(RootStoreContext);
 
   return (
     <View style={[styles.searchBar, ui.bg2]}>
@@ -61,12 +63,12 @@ export const Header: React.FC<Props> = observer(() => {
         round={true}
         placeholder="Search Here..."
         onChangeText={text => {
-          listingStore.searchText = text;
+          searchStore.setSearchText(text);
         }}
         onClear={() => {
-          listingStore.searchText = "";
+          searchStore.setSearchText("");
         }}
-        value={listingStore.searchText}
+        value={searchStore.term}
       />
     </View>
   );
