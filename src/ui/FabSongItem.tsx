@@ -1,16 +1,16 @@
-import * as React from "react";
+import * as React from "react"
 import {
   Modal,
   TouchableHighlight,
   View,
   Text,
   TouchableOpacity,
-} from "react-native";
+} from "react-native"
 
-import { StyleSheet } from "react-native";
-import { ui } from "../utils/UI";
-import { observer } from "mobx-react-lite";
-import { RootStoreContext } from "../stores/RootStore";
+import { StyleSheet } from "react-native"
+import { ui } from "../utils/UI"
+import { observer } from "mobx-react-lite"
+import { RootStoreContext } from "../stores/RootStore"
 const styles = StyleSheet.create({
   fabContainer: {
     backgroundColor: "transparent",
@@ -18,10 +18,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   fabSubContainer: {
-    width: "auto",
-    maxWidth: "40%",
-    left: "50%",
-    borderRadius: 15,
+    maxWidth: "35%",
+    left: "52%",
+    borderRadius: 5,
     paddingVertical: 0,
   },
   buttonsText: {
@@ -29,10 +28,10 @@ const styles = StyleSheet.create({
     textAlign: "left",
     paddingLeft: 10,
     fontSize: 16,
-    borderTopWidth: 1,
-    borderTopColor: ui.bg3.backgroundColor,
+    // borderTopWidth: 1,
+    // borderTopColor: ui.color2.color,
   },
-});
+})
 
 interface Props {}
 
@@ -40,11 +39,11 @@ export const FabSongItem: React.FC<Props> = observer(() => {
   const {
     landingStore: { fabPosition, closeFab, itemInFab },
     playerStore: { addToQueue },
-  } = React.useContext(RootStoreContext);
+  } = React.useContext(RootStoreContext)
   return (
     <Modal visible={fabPosition.length > 0} transparent={true}>
       <TouchableHighlight onPressIn={closeFab} style={[styles.fabContainer]}>
-        <View style={[styles.fabSubContainer, ui.bg1, { top: fabPosition }]}>
+        <View style={[styles.fabSubContainer, ui.bg3, { top: fabPosition }]}>
           <TouchableOpacity>
             <Text
               style={[styles.buttonsText, ui.color1, { borderTopWidth: 0 }]}
@@ -54,7 +53,7 @@ export const FabSongItem: React.FC<Props> = observer(() => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              addToQueue(itemInFab);
+              addToQueue(itemInFab)
             }}
           >
             <Text style={[styles.buttonsText, ui.color1]}>Add to Queue</Text>
@@ -67,5 +66,5 @@ export const FabSongItem: React.FC<Props> = observer(() => {
         </View>
       </TouchableHighlight>
     </Modal>
-  );
-});
+  )
+})

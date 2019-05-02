@@ -38,11 +38,9 @@ export const ResultsList: React.FC<Props> = observer(() => {
               onVideoPress={() => {
                 playerStore.fetchAudioUrlAndPlay(video);
               }}
-              onAddToQueue={() => {
-                playerStore.addToQueue(video);
-              }}
               video={video}
               key={video.videoId + video.title + i}
+              isDark={i % 2 === 0}
             />
           ))}
         </ScrollView>

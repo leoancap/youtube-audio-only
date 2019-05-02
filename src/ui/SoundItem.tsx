@@ -1,5 +1,5 @@
-import { observer } from "mobx-react-lite";
-import * as React from "react";
+import { observer } from "mobx-react-lite"
+import * as React from "react"
 import {
   Dimensions,
   Modal,
@@ -8,29 +8,31 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   View,
-} from "react-native";
-import { ui } from "../utils/UI";
-import { RootStoreContext } from "../stores/RootStore";
-import { Video } from "../stores/PlayerStore";
-import { LandingStore } from "../stores/LandingStore";
+  TextInput,
+} from "react-native"
+import { ui } from "../utils/UI"
+import { RootStoreContext } from "../stores/RootStore"
+import { Video } from "../stores/PlayerStore"
+import { LandingStore } from "../stores/LandingStore"
+import { FabSongItem } from "./FabSongItem"
 
 interface Props {
-  video: Video;
-  onVideoPress: () => void;
-  onAddToQueue: () => void;
+  video: Video
+  onVideoPress: () => void
+  isDark: boolean
 }
 
 export const SoundItem: React.FC<Props> = observer(
-  ({ video, onVideoPress }) => {
-    const { landingStore } = React.useContext(RootStoreContext);
+  ({ video, onVideoPress, isDark }) => {
+    const { landingStore } = React.useContext(RootStoreContext)
 
-    const { title, duration } = video;
+    const { title, duration } = video
 
     const handleOpenFab = (e: { nativeEvent: { pageY: number } }) =>
-      landingStore.openFab(e, video);
+      landingStore.openFab(e, video)
 
     return (
-      <View style={[styles.cardContainer, ui.bg2]}>
+      <View style={[styles.cardContainer, isDark ? ui.bg2 : ui.bg1]}>
         <TouchableOpacity
           onPress={onVideoPress}
           style={styles.musicTitleWrapper}
@@ -52,13 +54,13 @@ export const SoundItem: React.FC<Props> = observer(
           </View>
         </TouchableOpacity>
       </View>
-    );
+    )
   },
-);
+)
 
 const styles = StyleSheet.create({
   cardContainer: {
-    borderRadius: 10,
+    // borderRadius: 10,
     borderTopWidth: 1,
     borderTopColor: ui.bg1.backgroundColor,
     flex: 1,
@@ -66,10 +68,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    marginHorizontal: 2,
-    // paddingHorizontal: 50,
-    paddingLeft: 20,
-    paddingBottom: 10,
+    minHeight: 75,
+    paddingHorizontal: 18,
   },
   musicTitleWrapper: {
     flex: 1,
@@ -86,17 +86,18 @@ const styles = StyleSheet.create({
   circleWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    width: "20%",
-    minHeight: 70,
+    paddingHorizontal: 5,
+    paddingBottom: 10,
+    paddingLeft: 20,
   },
   circle: {
     flexDirection: "column",
   },
   circleText: {
-    backgroundColor: "#9c9c9c",
+    backgroundColor: ui.color1.color,
     width: 4,
     height: 4,
-    marginBottom: 5,
-    borderRadius: 20,
+    marginBottom: 3,
+    borderRadius: 2,
   },
-});
+})

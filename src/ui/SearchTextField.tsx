@@ -1,75 +1,63 @@
-import { observer } from "mobx-react-lite";
-import { View } from "native-base";
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import { SearchBar } from "react-native-elements";
-import { RootStoreContext } from "../stores/RootStore";
-import { ui } from "../utils/UI";
-import { search } from "../utils/searchOptimized";
-import { fromPromise } from "mobx-utils";
+import { observer } from "mobx-react-lite"
+import { View, Text } from "native-base"
+import * as React from "react"
+import { StyleSheet } from "react-native"
+import { SearchBar } from "react-native-elements"
+import { RootStoreContext } from "../stores/RootStore"
+import { ui } from "../utils/UI"
+import { search } from "../utils/searchOptimized"
+import { fromPromise } from "mobx-utils"
+import { Toolbar } from "react-native-material-ui"
+import { Header } from "./Header/Header"
 
 interface Props {}
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    // paddingHorizontal: 0,
   },
-  searchBar: {
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-    marginBottom: 0,
+  searchBar: {},
+  appTitle: {
+    fontSize: 22,
+    // fontFamily: "serif",
+    ...ui.color1,
   },
-  inputStyle: {
-    fontSize: 16,
-    marginLeft: 0,
-    marginRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-    flex: 80,
-    height: 40,
-  },
-  searchIcon: {
-    marginLeft: 0,
-    marginRight: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-    flex: 9,
-    height: 40,
-  },
-  cancelIcon: {
-    marginLeft: 0,
-    marginRight: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-    height: 40,
-    flex: 9,
-  },
-  goText: {
-    fontSize: 18,
-    color: "#bbb",
-  },
-});
+})
 
 export const SearchTextField: React.FC<Props> = observer(() => {
-  const { searchStore } = React.useContext(RootStoreContext);
+  const { searchStore } = React.useContext(RootStoreContext)
 
-  return (
-    <View style={[styles.searchBar, ui.bg2]}>
-      <SearchBar
-        containerStyle={[styles.searchBar, ui.bg2]}
-        inputStyle={[styles.inputStyle, ui.bg1]}
-        leftIconContainerStyle={[styles.searchIcon, ui.bg1]}
-        rightIconContainerStyle={[styles.cancelIcon, ui.bg1]}
-        lightTheme={false}
-        round={true}
-        placeholder="Search Here..."
-        onChangeText={text => {
-          searchStore.setSearchText(text);
-        }}
-        onClear={() => {
-          searchStore.setSearchText("");
-        }}
-        value={searchStore.term}
-      />
-    </View>
-  );
-});
+  return <Header />
+
+  // return (
+  //   <Toolbar
+  //     leftElement="menu"
+  //     centerElement={<Text style={styles.appTitle}>Stremify</Text>}
+  //     style={{
+  //       container: [styles.container, ui.bg1],
+  //       leftElementContainer: [styles.searchBar],
+  //       rightElementContainer: [styles.searchBar],
+  //       centerElementContainer: [styles.searchBar],
+  //       leftElement: [ui.color1],
+  //       rightElement: [ui.color1],
+  //     }}
+  //     searchable={{
+  //       autoFocus: true,
+  //       placeholder: "Search",
+  //       onChangeText: text => {
+  //         searchStore.setSearchText(text);
+  //       },
+  //     }}
+  //     searchValue={searchStore.term}
+  //     rightElement={{
+  //       menu: {
+  //         icon: "more-vert",
+  //         labels: ["item 1", "item 2"],
+  //       },
+  //     }}
+  //     onRightElementPress={label => {
+  //       console.log(label);
+  //     }}
+  //   />
+  // );
+})
