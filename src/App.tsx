@@ -1,6 +1,6 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Router } from "./Routes";
+import React from "react"
+import { StyleSheet, View } from "react-native"
+import { Router } from "./Routes"
 
 export class App extends React.Component {
   render() {
@@ -10,7 +10,7 @@ export class App extends React.Component {
           <Router />
         </View>
       </View>
-    );
+    )
   }
 }
 
@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    height: "100%"
+    height: "100%",
   },
   wrapper: {
     flex: 1,
-    backgroundColor: "#f5fcff",
+    backgroundColor: "#f5cc3f",
     width: "100%",
-    maxWidth: 425
-  }
-});
+    maxWidth: 425,
+  },
+})
