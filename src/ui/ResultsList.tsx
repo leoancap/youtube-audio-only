@@ -1,11 +1,11 @@
-import * as React from "react";
-import { SoundItem } from "./SoundItem";
-import { RootStoreContext } from "../stores/RootStore";
-import { Video } from "../stores/PlayerStore";
-import { observer } from "mobx-react-lite";
-import { Container, Text, View } from "native-base";
-import { ui } from "../utils/UI";
-import { ScrollView } from "react-native";
+import * as React from "react"
+import { SoundItem } from "./SoundItem"
+import { RootStoreContext } from "../stores/RootStore"
+import { Video } from "../stores/PlayerStore"
+import { observer } from "mobx-react-lite"
+import { Container, Text, View } from "native-base"
+import { ui } from "../utils/UI"
+import { ScrollView } from "react-native"
 
 interface Props {}
 
@@ -13,11 +13,11 @@ export const ResultsList: React.FC<Props> = observer(() => {
   const {
     searchStore: { term, searchPromise },
     playerStore,
-  } = React.useContext(RootStoreContext);
+  } = React.useContext(RootStoreContext)
 
   return !term ? (
     <Container style={[ui.bg2]}>
-      <Text>Search for something</Text>
+      <Text style={{ color: "grey" }}>Search for something</Text>
     </Container>
   ) : (
     searchPromise.case({
@@ -36,7 +36,7 @@ export const ResultsList: React.FC<Props> = observer(() => {
           {videos.map((video: Video, i: number) => (
             <SoundItem
               onVideoPress={() => {
-                playerStore.fetchAudioUrlAndPlay(video);
+                playerStore.fetchAudioUrlAndPlay(video)
               }}
               video={video}
               key={video.videoId + video.title + i}
@@ -46,5 +46,5 @@ export const ResultsList: React.FC<Props> = observer(() => {
         </ScrollView>
       ),
     })
-  );
-});
+  )
+})

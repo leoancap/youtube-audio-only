@@ -39,10 +39,26 @@ const animatedSliderBottomPosition = playerModalPosition.y.interpolate({
   outputRange: [130, 70],
   extrapolate: "clamp",
 })
+const animatedTitleOpacity = playerModalPosition.y.interpolate({
+  inputRange: [SCREEN_HEIGHT - 150, SCREEN_HEIGHT - 70],
+  outputRange: [1, 0],
+  extrapolate: "clamp",
+})
+const animatedTitleBottom = playerModalPosition.y.interpolate({
+  inputRange: [SCREEN_HEIGHT - 190, SCREEN_HEIGHT - 90],
+  outputRange: [180, 90],
+  extrapolate: "clamp",
+})
 
 const animatedSliderHorizontalPosition = playerModalPosition.y.interpolate({
   inputRange: [SCREEN_HEIGHT - 150, SCREEN_HEIGHT - 70],
   outputRange: [30, 0],
+  extrapolate: "clamp",
+})
+
+const animatedTitle = playerModalPosition.y.interpolate({
+  inputRange: [SCREEN_HEIGHT - 300, SCREEN_HEIGHT - 250],
+  outputRange: [70, 30],
   extrapolate: "clamp",
 })
 
@@ -80,6 +96,7 @@ export const PlayerFooter: React.FC<{}> = observer(() => {
         source={{ uri: currentSong.audioUrl }}
         style={styles.player}
         rate={rate}
+        playInBackground
         paused={playbackState === "paused"}
         ref={player}
         onProgress={(data) => {
@@ -92,7 +109,55 @@ export const PlayerFooter: React.FC<{}> = observer(() => {
       <Animated.View
         style={[
           {
-            // opacity: animatedSliderOpacity,
+            opacity: animatedTitleOpacity,
+            bottom: animatedTitleBottom,
+            justifyContent: "center",
+            marginLeft: 20,
+            marginRight: 20,
+          },
+          styles.line,
+        ]}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <View
+            style={{
+              marginRight: 20,
+              paddingRight: 20,
+            }}
+          >
+            {iconSorter("minus", () => {
+              console.log(playerStore.queue)
+            })}
+          </View>
+          <Text
+            style={{
+              color: "lightgray",
+              marginLeft: "auto",
+              marginRight: "auto",
+              fontSize: 18,
+            }}
+          >
+            {currentSong.title}
+          </Text>
+          <View
+            style={{
+              marginLeft: 20,
+              paddingLeft: 20,
+            }}
+          >
+            {iconSorter("plus", () => {
+              console.log(playerStore.queue)
+            })}
+          </View>
+        </View>
+      </Animated.View>
+      <Animated.View
+        style={[
+          {
             left: animatedSliderHorizontalPosition,
             right: animatedSliderHorizontalPosition,
             bottom: animatedSliderBottomPosition,
@@ -129,10 +194,7 @@ export const PlayerFooter: React.FC<{}> = observer(() => {
             ? secToHHMMSS(currentTime + 1, currentSong.duration)
             : secToHHMMSS(0, currentSong.duration)}
         </Text>
-        {iconSorter("step-backward", () => {
-          // console.log(currentSong);
-          // currentSong.setCurrentTime(455);
-        })}
+        {iconSorter("step-backward", () => {})}
         {playbackState === "playing" &&
           iconSorter("pause", () => {
             pause()

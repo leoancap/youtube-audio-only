@@ -1,20 +1,9 @@
 import { observer } from "mobx-react-lite"
 import * as React from "react"
-import {
-  Dimensions,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-  TextInput,
-} from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { ui } from "../utils/UI"
 import { RootStoreContext } from "../stores/RootStore"
 import { Video } from "../stores/PlayerStore"
-import { LandingStore } from "../stores/LandingStore"
-import { FabSongItem } from "./FabSongItem"
 
 interface Props {
   video: Video

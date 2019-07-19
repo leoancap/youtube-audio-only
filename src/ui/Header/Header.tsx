@@ -64,7 +64,7 @@ export const Header: React.FC<Props> = observer(() => {
               name="md-menu"
               style={styles.burgerIcon}
             />
-            <Text style={styles.appTitle}>Streamify</Text>
+            <Text style={styles.appTitle}>Youtube-audio-only</Text>
           </View>
           <View style={styles.section}>
             <Ionicons
